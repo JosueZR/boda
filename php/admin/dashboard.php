@@ -4,9 +4,17 @@
 // ============================================================
 session_start();
 
+// Módulo para cerrar sesión de manera segura y redirigir al Index de la boda
+if (isset($_GET['action']) && $_GET['action'] === 'logout') {
+    session_unset();
+    session_destroy();
+    header("Location: ../../index.html");
+    exit;
+}
+
 // Proteger: solo admins logueados
 if (!isset($_SESSION['admin_logueado']) || $_SESSION['admin_logueado'] !== true) {
-    header('Location: login.php');
+    header("Location: ../../public/admin/login.php");
     exit;
 }
 
@@ -123,7 +131,6 @@ $total_pendientes  = 0;
 
 if ($bdConectada) {
     try {
-        // Subquery para traer solo la confirmación más reciente por familia
         $rows = $pdo->query("
             SELECT f.id, f.nombre, f.lugares_asignados,
                    c.personas_confirmadas AS confirmados,
@@ -169,377 +176,10 @@ $porcentaje = $total_invitados > 0 ? round(($total_confirmados / $total_invitado
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel Admin · Luis & Erendira</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        /* ============================================================
-           ADMIN DASHBOARD STYLES
-           ============================================================ */
-        :root {
-            --crema:        #faf6f0;
-            --crema-oscura: #f0e8d8;
-            --dorado:       #c9a96e;
-            --dorado-claro: #e8d5b0;
-            --dorado-oscuro:#a07840;
-            --cafe:         #3b2f24;
-            --cafe-medio:   #5c4a35;
-            --texto:        #4a3f35;
-            --texto-suave:  #8a7a6a;
-            --blanco:       #ffffff;
-            --verde:        #3a8a5a;
-            --rojo:         #c0392b;
-            --sombra:       rgba(59,47,36,0.08);
-        }
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
-        body {
-            background: var(--crema);
-            font-family: 'Poppins', sans-serif;
-            color: var(--texto);
-            min-height: 100vh;
-        }
-
-        /* ── SIDEBAR / NAVBAR ── */
-        .topbar {
-            background: var(--cafe);
-            padding: 0 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 64px;
-            box-shadow: 0 2px 20px rgba(59,47,36,0.2);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        .topbar-brand {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-        .topbar-ornament { color: var(--dorado); font-size: 1.2rem; }
-        .topbar-title {
-            font-family: 'Playfair Display', serif;
-            color: var(--dorado-claro);
-            font-size: 1.1rem;
-        }
-        .topbar-title span { color: rgba(232,213,176,0.5); font-style: italic; font-size: 0.85rem; }
-        .topbar-right { display: flex; align-items: center; gap: 1rem; }
-        .badge-bd {
-            font-size: 0.72rem;
-            padding: 0.3rem 0.7rem;
-            border-radius: 20px;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-        }
-        .badge-bd.conectado { background: rgba(58,138,90,0.2); color: #7dd4a3; border: 1px solid rgba(58,138,90,0.3); }
-        .badge-bd.demo { background: rgba(201,169,110,0.15); color: var(--dorado); border: 1px solid rgba(201,169,110,0.3); }
-        .btn-logout {
-            color: rgba(232,213,176,0.6);
-            text-decoration: none;
-            font-size: 0.8rem;
-            padding: 0.4rem 0.8rem;
-            border: 1px solid rgba(232,213,176,0.2);
-            border-radius: 6px;
-            transition: all 0.3s;
-        }
-        .btn-logout:hover { color: var(--dorado-claro); border-color: rgba(201,169,110,0.5); }
-
-        /* ── CONTENIDO PRINCIPAL ── */
-        .page-content {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 2.5rem 1.5rem;
-        }
-
-        /* ── FLASH MESSAGE ── */
-        .flash {
-            padding: 0.9rem 1.2rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            animation: slideDown 0.4s ease;
-        }
-        .flash.success { background: #f0faf4; border: 1px solid #9ecca8; color: #2d7a45; }
-        .flash.error   { background: #fdf2f2; border: 1px solid #f0c0c0; color: #c0392b; }
-        .flash.warning { background: #fefcf0; border: 1px solid #e8d5a0; color: #7a6030; }
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ── ESTADÍSTICAS ── */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2.5rem;
-        }
-        .stat-card {
-            background: var(--blanco);
-            border: 1px solid rgba(201,169,110,0.2);
-            border-radius: 12px;
-            padding: 1.5rem;
-            text-align: center;
-            box-shadow: 0 4px 20px var(--sombra);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .stat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 30px var(--sombra);
-        }
-        .stat-emoji { font-size: 2rem; margin-bottom: 0.5rem; }
-        .stat-num {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            color: var(--cafe);
-            line-height: 1;
-        }
-        .stat-label {
-            font-size: 0.78rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--texto-suave);
-            margin-top: 0.3rem;
-        }
-
-        /* BARRA DE PROGRESO */
-        .progreso-section {
-            background: var(--blanco);
-            border: 1px solid rgba(201,169,110,0.2);
-            border-radius: 12px;
-            padding: 1.5rem 2rem;
-            margin-bottom: 2.5rem;
-            box-shadow: 0 4px 20px var(--sombra);
-        }
-        .progreso-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.8rem;
-        }
-        .progreso-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.1rem;
-            color: var(--cafe);
-        }
-        .progreso-pct {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
-            color: var(--dorado-oscuro);
-        }
-        .progress-bar-bg {
-            background: var(--crema-oscura);
-            border-radius: 100px;
-            height: 12px;
-            overflow: hidden;
-        }
-        .progress-bar-fill {
-            height: 100%;
-            border-radius: 100px;
-            background: linear-gradient(to right, var(--dorado), var(--dorado-oscuro));
-            transition: width 1s ease;
-        }
-
-        /* ── SECCIONES ── */
-        .section-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 1.2rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        .section-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
-            color: var(--cafe);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        /* ── FORMULARIO AGREGAR FAMILIA ── */
-        .form-agregar {
-            background: var(--blanco);
-            border: 1px solid rgba(201,169,110,0.2);
-            border-radius: 12px;
-            padding: 1.8rem;
-            margin-bottom: 2.5rem;
-            box-shadow: 0 4px 20px var(--sombra);
-        }
-        .form-agregar-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
-            color: var(--cafe);
-            margin-bottom: 1.2rem;
-            padding-bottom: 0.8rem;
-            border-bottom: 1px solid rgba(201,169,110,0.2);
-        }
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr auto auto;
-            gap: 0.8rem;
-            align-items: end;
-        }
-        .form-campo label {
-            display: block;
-            font-size: 0.72rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--texto-suave);
-            margin-bottom: 0.4rem;
-            font-weight: 500;
-        }
-        .form-campo input {
-            width: 100%;
-            padding: 0.7rem 1rem;
-            border: 1.5px solid #dcd3c7;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            font-family: 'Poppins', sans-serif;
-            color: var(--texto);
-            outline: none;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-        .form-campo input:focus {
-            border-color: var(--dorado);
-            box-shadow: 0 0 0 3px rgba(201,169,110,0.15);
-        }
-        .btn-agregar {
-            padding: 0.7rem 1.5rem;
-            background: var(--cafe);
-            color: var(--crema);
-            border: none;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
-            white-space: nowrap;
-            letter-spacing: 0.5px;
-        }
-        .btn-agregar:hover {
-            background: var(--cafe-medio);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(59,47,36,0.2);
-        }
-
-        /* ── TABLA DE FAMILIAS ── */
-        .tabla-wrapper {
-            background: var(--blanco);
-            border: 1px solid rgba(201,169,110,0.2);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px var(--sombra);
-        }
-        .tabla-familias {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .tabla-familias thead {
-            background: var(--cafe);
-        }
-        .tabla-familias thead th {
-            padding: 1rem 1.2rem;
-            text-align: left;
-            font-size: 0.72rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--dorado-claro);
-            font-weight: 500;
-        }
-        .tabla-familias tbody tr {
-            border-bottom: 1px solid rgba(201,169,110,0.1);
-            transition: background 0.2s;
-        }
-        .tabla-familias tbody tr:last-child { border-bottom: none; }
-        .tabla-familias tbody tr:hover { background: var(--crema); }
-        .tabla-familias td {
-            padding: 1rem 1.2rem;
-            font-size: 0.9rem;
-            vertical-align: middle;
-        }
-        .nombre-familia {
-            font-family: 'Playfair Display', serif;
-            font-size: 1rem;
-            color: var(--cafe);
-        }
-        .badge-confirmado {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            font-size: 0.82rem;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-        }
-        .badge-confirmado.si {
-            background: #f0faf4;
-            color: #2d7a45;
-            border: 1px solid #9ecca8;
-        }
-        .badge-confirmado.pendiente {
-            background: #fefcf0;
-            color: #7a6030;
-            border: 1px solid #e8d5a0;
-        }
-        .badge-confirmado.no {
-            background: #fdf2f2;
-            color: #c0392b;
-            border: 1px solid #f0c0c0;
-        }
-        .progress-mini-bg {
-            background: var(--crema-oscura);
-            border-radius: 100px;
-            height: 8px;
-            width: 100px;
-            overflow: hidden;
-            display: inline-block;
-        }
-        .progress-mini-fill {
-            height: 100%;
-            border-radius: 100px;
-            background: linear-gradient(to right, var(--dorado), var(--dorado-oscuro));
-        }
-        .btn-eliminar {
-            background: none;
-            border: 1px solid #f0c0c0;
-            color: #c0392b;
-            padding: 0.3rem 0.7rem;
-            border-radius: 6px;
-            font-size: 0.78rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-family: 'Poppins', sans-serif;
-        }
-        .btn-eliminar:hover {
-            background: #fdf2f2;
-            border-color: #c0392b;
-        }
-        .sin-datos {
-            text-align: center;
-            padding: 3rem;
-            color: var(--texto-suave);
-            font-size: 0.9rem;
-        }
-        .sin-datos .sin-icon { font-size: 2.5rem; margin-bottom: 0.8rem; }
-
-        /* ── RESPONSIVE ── */
-        @media (max-width: 700px) {
-            .form-row { grid-template-columns: 1fr; }
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
-            .topbar { padding: 0 1rem; }
-            .topbar-title span { display: none; }
-            .tabla-familias thead th:nth-child(4),
-            .tabla-familias td:nth-child(4) { display: none; }
-        }
-    </style>
+    <link rel="stylesheet" href="../../public/css/dashboard.css">
 </head>
 <body>
 
-<!-- TOP BAR -->
 <nav class="topbar">
     <div class="topbar-brand">
         <span class="topbar-ornament">◇</span>
@@ -549,25 +189,18 @@ $porcentaje = $total_invitados > 0 ? round(($total_confirmados / $total_invitado
         </div>
     </div>
     <div class="topbar-right">
-        <?php if ($bdConectada): ?>
-            <span class="badge-bd conectado">🟢 BD Conectada</span>
-        <?php else: ?>
-            <span class="badge-bd demo">⚡ Modo Demo</span>
-        <?php endif; ?>
-        <a href="logout.php" class="btn-logout">Salir →</a>
+        <a href="dashboard.php?action=logout" class="btn-logout">Salir →</a>
     </div>
 </nav>
 
 <div class="page-content">
 
-    <!-- FLASH -->
     <?php if ($mensaje): ?>
         <div class="flash <?= $tipo_msg ?>">
             <?= htmlspecialchars($mensaje) ?>
         </div>
     <?php endif; ?>
 
-    <!-- ESTADÍSTICAS -->
     <div class="stats-grid">
         <div class="stat-card">
             <div class="stat-emoji">👨‍👩‍👧‍👦</div>
@@ -591,7 +224,6 @@ $porcentaje = $total_invitados > 0 ? round(($total_confirmados / $total_invitado
         </div>
     </div>
 
-    <!-- BARRA DE PROGRESO -->
     <div class="progreso-section">
         <div class="progreso-header">
             <span class="progreso-title">📊 Progreso de Confirmaciones</span>
@@ -605,7 +237,6 @@ $porcentaje = $total_invitados > 0 ? round(($total_confirmados / $total_invitado
         </p>
     </div>
 
-    <!-- FORMULARIO AGREGAR FAMILIA -->
     <div class="form-agregar">
         <h2 class="form-agregar-title">➕ Agregar Nueva Familia</h2>
         <form method="POST" action="" id="formAgregar">
@@ -643,7 +274,6 @@ $porcentaje = $total_invitados > 0 ? round(($total_confirmados / $total_invitado
         </form>
     </div>
 
-    <!-- TABLA DE FAMILIAS -->
     <div class="section-header">
         <h2 class="section-title">👨‍👩‍👧 Lista de Familias Invitadas</h2>
         <span style="font-size:0.8rem; color:var(--texto-suave);">
@@ -718,15 +348,13 @@ $porcentaje = $total_invitados > 0 ? round(($total_confirmados / $total_invitado
         <?php endif; ?>
     </div>
 
-</div><!-- /page-content -->
+</div>
 
 <script>
-// Animación barra de progreso al cargar
+// Animación de la barra de progreso
 setTimeout(() => {
     document.getElementById('barraProgreso').style.width = '<?= $porcentaje ?>%';
 }, 200);
-
-// Confirmar eliminación con estilo
 </script>
 
 </body>
