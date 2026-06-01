@@ -1,0 +1,119 @@
+:root {
+    --fondo: #f9f6f0;      /* Blanco hueso / Crema */
+    --dorado: #c5a880;     /* Dorado elegante */
+    --dorado-oscuro: #a3855c;
+    --texto: #4a4a4a;      /* Gris oscuro suave */
+    --blanco: #ffffff;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: var(--fondo);
+    /* Sutil patrón de puntos dorados de fondo */
+    background-image: radial-gradient(rgba(197, 168, 128, 0.1) 1px, transparent 0);
+    background-size: 24px 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-card {
+    background: var(--blanco);
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    border: 1px solid rgba(197, 168, 128, 0.2);
+}
+
+/* Detalles decorativos superiores estilo boda */
+.decoracion {
+    font-size: 1.5rem;
+    color: var(--dorado);
+    margin-bottom: 0.5rem;
+}
+
+h1 {
+    font-family: 'Playfair Display', serif;
+    color: var(--texto);
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+p.subtitulo {
+    color: #8c8c8c;
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    font-style: italic;
+    font-family: 'Playfair Display', serif;
+}
+
+.form-group {
+    text-align: left;
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--texto);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: var(--texto);
+    transition: all 0.3s ease;
+    background-color: #fdfdfd;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--dorado);
+    box-shadow: 0 0 0 3px rgba(197, 168, 128, 0.15);
+}
+
+button {
+    width: 100%;
+    padding: 0.75rem;
+    background: var(--dorado);
+    color: var(--blanco);
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 0.5rem;
+    letter-spacing: 1px;
+}
+
+button:hover {
+    background: var(--dorado-oscuro);
+}
+
+.error-msg {
+    background-color: #fdf2f2;
+    color: #ec5b5b;
+    padding: 0.7rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #f9dede;
+}

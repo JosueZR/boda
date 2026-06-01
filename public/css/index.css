@@ -1,0 +1,692 @@
+/* ============================================================
+   INDEX.CSS — Página Principal de Boda · Luis & Erendira
+   ============================================================ */
+
+:root {
+    --crema:        #faf6f0;
+    --crema-oscura: #f2ebe0;
+    --dorado:       #c9a96e;
+    --dorado-claro: #e8d5b0;
+    --dorado-oscuro:#a07840;
+    --cafe:         #3b2f24;
+    --cafe-medio:   #5c4a35;
+    --texto:        #4a3f35;
+    --texto-suave:  #8a7a6a;
+    --blanco:       #ffffff;
+    --sombra:       rgba(59,47,36,0.08);
+}
+
+/* ── RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    background-color: var(--crema);
+    color: var(--texto);
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.7;
+    overflow-x: hidden;
+}
+
+/* ── TIPOGRAFÍA ── */
+h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+}
+
+/* ── BOTÓN ADMIN OCULTO ── */
+.admin-trigger {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    color: transparent;
+    font-size: 1.2rem;
+    text-decoration: none;
+    z-index: 100;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s;
+    cursor: default;
+}
+.admin-trigger:hover {
+    color: rgba(201,169,110,0.3);
+    background: rgba(201,169,110,0.1);
+    cursor: pointer;
+}
+
+/* ── PARTÍCULAS ── */
+.particles {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+.particle {
+    position: absolute;
+    color: rgba(201,169,110,0.2);
+    animation: floatParticle linear infinite;
+    font-size: 0.8rem;
+}
+@keyframes floatParticle {
+    0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { transform: translateY(-80px) rotate(360deg); opacity: 0; }
+}
+
+/* ══════════════════════════════════
+   HERO / PORTADA
+══════════════════════════════════ */
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    background:
+        linear-gradient(160deg, rgba(250,246,240,0.92) 0%, rgba(240,232,216,0.95) 40%, rgba(232,217,192,0.92) 100%),
+        url('../img/wedding_bg.png') center/cover no-repeat;
+}
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 60% 50% at 20% 80%, rgba(201,169,110,0.15) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 50% at 80% 20%, rgba(201,169,110,0.12) 0%, transparent 70%);
+    pointer-events: none;
+}
+.hero-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0; right: 0;
+    height: 120px;
+    background: linear-gradient(to bottom, transparent, var(--crema));
+    pointer-events: none;
+}
+.hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 2rem;
+    animation: fadeInUp 1.2s ease both;
+}
+.ornament {
+    color: var(--dorado);
+    letter-spacing: 4px;
+    font-size: 0.9rem;
+    margin: 1.2rem 0;
+    opacity: 0.7;
+}
+.fecha-boda {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    color: var(--dorado-oscuro);
+    margin-bottom: 1rem;
+    animation: fadeInUp 1.2s ease 0.2s both;
+}
+.nombres {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 10vw, 7rem);
+    color: var(--cafe);
+    line-height: 1.1;
+    letter-spacing: 3px;
+    animation: fadeInUp 1.2s ease 0.4s both;
+}
+.ampersand {
+    font-style: italic;
+    color: var(--dorado);
+    font-size: 0.85em;
+}
+.versiculo {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--texto-suave);
+    max-width: 480px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.9;
+    animation: fadeInUp 1.2s ease 0.6s both;
+}
+.cita {
+    display: block;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    color: var(--dorado);
+    margin-top: 0.6rem;
+    font-style: normal;
+}
+.scroll-btn {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--texto-suave);
+    text-decoration: none;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s;
+    animation: fadeInUp 1.2s ease 0.8s both;
+}
+.scroll-btn:hover { color: var(--dorado); }
+.scroll-arrow {
+    animation: bounceDown 2s ease infinite;
+    font-size: 1.2rem;
+}
+@keyframes bounceDown {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+}
+
+/* ── CONTENIDO PRINCIPAL ── */
+.main-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* ── CUENTA REGRESIVA ── */
+.countdown-section {
+    background: var(--cafe);
+    padding: 3rem 1.5rem;
+    text-align: center;
+}
+.countdown-grid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+.countdown-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 80px;
+}
+.count-number {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    color: var(--dorado-claro);
+    line-height: 1;
+    transition: all 0.3s;
+}
+.count-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgba(232,213,176,0.5);
+    margin-top: 0.3rem;
+}
+.countdown-sep {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: var(--dorado);
+    opacity: 0.5;
+    padding-bottom: 1.5rem;
+}
+.countdown-done {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--dorado-claro);
+    text-align: center;
+}
+
+/* ── SECCIONES GENERALES ── */
+.seccion {
+    max-width: 820px;
+    margin: 4rem auto;
+    padding: 3.5rem 2.5rem;
+    background: var(--blanco);
+    border: 1px solid rgba(201,169,110,0.2);
+    border-radius: 6px;
+    box-shadow: 0 8px 40px var(--sombra);
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.seccion.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+.seccion-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+.seccion h2 {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    color: var(--cafe);
+    margin-bottom: 0.5rem;
+}
+.divider {
+    color: var(--dorado);
+    font-size: 1.2rem;
+    letter-spacing: 8px;
+    margin: 1rem 0 1.8rem;
+    opacity: 0.6;
+}
+.seccion-subtitulo {
+    color: var(--texto-suave);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+}
+
+/* ── UBICACIÓN ── */
+.ubicacion-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin: 2rem 0;
+}
+.lugar-card {
+    background: var(--crema);
+    border: 1px solid rgba(201,169,110,0.2);
+    border-radius: 8px;
+    padding: 1.5rem 2rem;
+    min-width: 180px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.lugar-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px var(--sombra);
+}
+.lugar-emoji { font-size: 2rem; margin-bottom: 0.5rem; }
+.lugar-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--cafe);
+    margin-bottom: 0.4rem;
+}
+.lugar-card p { font-size: 0.9rem; color: var(--texto-suave); }
+.lugar-hora {
+    font-family: 'Playfair Display', serif;
+    color: var(--dorado) !important;
+    font-size: 1.1rem !important;
+    margin-top: 0.4rem;
+}
+.lugar-sep {
+    font-size: 1.5rem;
+    color: var(--dorado);
+    opacity: 0.4;
+}
+.direccion {
+    color: var(--texto-suave);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+}
+.btn-mapa {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 2rem;
+    border: 1.5px solid var(--dorado);
+    color: var(--cafe-medio);
+    text-decoration: none;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-radius: 3px;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+.btn-mapa:hover {
+    background: var(--dorado);
+    color: var(--blanco);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(201,169,110,0.3);
+}
+
+/* ── GALERÍA ── */
+.galeria {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+.galeria-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+    aspect-ratio: 4/3;
+    cursor: pointer;
+}
+.galeria-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+.galeria-item:hover img { transform: scale(1.08); }
+.galeria-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(59,47,36,0.7) 0%, transparent 60%);
+    display: flex;
+    align-items: flex-end;
+    padding: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.galeria-item:hover .galeria-overlay { opacity: 1; }
+.galeria-overlay span {
+    color: var(--blanco);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+}
+
+/* ── REGALOS ── */
+.regalo-texto {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    color: var(--texto);
+    line-height: 1.8;
+    margin-bottom: 1.2rem;
+}
+.regalo-destaque {
+    font-family: 'Playfair Display', serif;
+    color: var(--dorado);
+    font-size: 1.2rem;
+}
+
+/* ══════════════════════════════════
+   SECCIÓN CONFIRMACIÓN
+══════════════════════════════════ */
+.seccion-confirmacion { text-align: left; }
+.seccion-confirmacion h2 { text-align: center; }
+.seccion-confirmacion .divider { text-align: center; }
+.seccion-confirmacion .seccion-icon { text-align: center; }
+
+.alerta-fecha {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--texto-suave);
+    margin-bottom: 2rem;
+    padding: 0.7rem 1rem;
+    background: var(--crema);
+    border-radius: 4px;
+    border: 1px solid rgba(201,169,110,0.2);
+}
+.alerta-fecha strong { color: var(--dorado-oscuro); }
+
+/* FORM */
+.form-group { margin-bottom: 1.5rem; }
+.form-label-boda {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--texto-suave);
+    margin-bottom: 0.6rem;
+    font-weight: 500;
+}
+.select-wrapper {
+    position: relative;
+    display: block;
+}
+.select-boda {
+    width: 100%;
+    padding: 0.9rem 2.5rem 0.9rem 1rem;
+    border: 1.5px solid #dcd3c7;
+    background: var(--blanco);
+    color: var(--texto);
+    font-size: 0.95rem;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 6px;
+    outline: none;
+    appearance: none;
+    cursor: pointer;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+.select-boda:focus {
+    border-color: var(--dorado);
+    box-shadow: 0 0 0 3px rgba(201,169,110,0.15);
+}
+.select-arrow {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--dorado);
+    pointer-events: none;
+    font-size: 1.2rem;
+}
+.input-boda {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border: 1.5px solid #dcd3c7;
+    background: var(--blanco);
+    color: var(--texto);
+    font-size: 0.9rem;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 6px;
+    outline: none;
+    resize: vertical;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+.input-boda:focus {
+    border-color: var(--dorado);
+    box-shadow: 0 0 0 3px rgba(201,169,110,0.15);
+}
+
+/* CARD CONTADOR */
+.card-contador {
+    background: var(--blanco);
+    border: 1.5px solid #dcd3c7;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    transition: border-color 0.3s;
+}
+.card-contador:hover { border-color: var(--dorado-claro); }
+.contador-info { flex: 1; }
+.contador-familia-nombre {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    color: var(--cafe);
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+}
+.contador-limite {
+    font-size: 0.82rem;
+    color: var(--texto-suave);
+}
+.contador-control {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+.btn-contador {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1.5px solid #dcd3c7;
+    background: var(--blanco);
+    color: var(--cafe);
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    user-select: none;
+    line-height: 1;
+}
+.btn-contador:hover:not(.disabled) {
+    border-color: var(--dorado);
+    background: var(--crema);
+    color: var(--dorado-oscuro);
+    transform: scale(1.1);
+}
+.btn-contador.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+.contador-numero {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--cafe);
+    min-width: 2rem;
+    text-align: center;
+    transition: transform 0.15s;
+}
+.contador-numero.bounce {
+    animation: numBounce 0.3s ease;
+}
+@keyframes numBounce {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.4); }
+    100% { transform: scale(1); }
+}
+
+/* RESUMEN CARD */
+.resumen-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.2rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    margin-bottom: 1rem;
+}
+.resumen-todos {
+    background: #f0f8f0;
+    border: 1px solid #b8ddb8;
+    color: #3a6b3a;
+}
+.resumen-parcial {
+    background: var(--crema);
+    border: 1px solid rgba(201,169,110,0.3);
+    color: var(--texto);
+}
+.resumen-ninguno {
+    background: #fdf5f5;
+    border: 1px solid #e8c0c0;
+    color: #7a3a3a;
+}
+.resumen-texto {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+.resumen-emoji { font-size: 1.2rem; }
+.resumen-count {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    white-space: nowrap;
+}
+
+/* BOTÓN CONFIRMAR */
+.btn-confirmar {
+    width: 100%;
+    background: var(--cafe);
+    color: var(--crema);
+    border: none;
+    padding: 1.1rem;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s;
+    margin-top: 0.5rem;
+    position: relative;
+    overflow: hidden;
+}
+.btn-confirmar::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.5s;
+}
+.btn-confirmar:hover::after { transform: translateX(100%); }
+.btn-confirmar:hover {
+    background: var(--cafe-medio);
+    box-shadow: 0 8px 25px rgba(59,47,36,0.25);
+    transform: translateY(-2px);
+}
+.btn-confirmar:active { transform: translateY(0); }
+.btn-confirmar:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* MENSAJE DE ÉXITO */
+.mensaje-exito {
+    text-align: center;
+    padding: 2.5rem;
+    animation: fadeInUp 0.6s ease both;
+}
+.exito-icon { font-size: 3.5rem; margin-bottom: 1rem; }
+.mensaje-exito h3 {
+    font-size: 1.8rem;
+    color: var(--cafe);
+    margin-bottom: 0.8rem;
+}
+.mensaje-exito p { color: var(--texto-suave); font-size: 1rem; line-height: 1.8; }
+
+/* ── FOOTER ── */
+.footer {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--texto-suave);
+}
+.footer .ornament { margin-bottom: 1.2rem; }
+.footer-nombres {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--cafe);
+    margin-bottom: 0.3rem;
+}
+.footer-fecha {
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+    color: var(--dorado);
+    margin-bottom: 0.8rem;
+}
+.footer-copy { font-size: 0.85rem; }
+
+/* ── ANIMACIONES ENTRADA ── */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.fade-in-up {
+    animation: fadeInUp 0.5s ease both;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+    .seccion { margin: 2rem 1rem; padding: 2rem 1.2rem; }
+    .card-contador { flex-wrap: wrap; gap: 0.8rem; }
+    .ubicacion-info { flex-direction: column; }
+    .lugar-sep { display: none; }
+    .countdown-sep { font-size: 1.5rem; }
+    .galeria { grid-template-columns: 1fr; }
+}
