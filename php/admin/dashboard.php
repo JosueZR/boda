@@ -123,13 +123,25 @@ $total_pendientes  = 0;
 
 if ($bdConectada) {
     try {
+        // Subquery para traer solo la confirmación más reciente por familia
         $rows = $pdo->query("
             SELECT f.id, f.nombre, f.lugares_asignados,
                    c.personas_confirmadas AS confirmados,
                    c.nota,
                    c.fecha_confirmacion
             FROM familias f
-            LEFT JOIN confirmaciones c ON c.familia_id = f.id
+            LEFT JOIN (
+                SELECT familia_id,
+                       personas_confirmadas,
+                       nota,
+                       fecha_confirmacion
+                FROM confirmaciones c1
+                WHERE fecha_confirmacion = (
+                    SELECT MAX(fecha_confirmacion)
+                    FROM confirmaciones c2
+                    WHERE c2.familia_id = c1.familia_id
+                )
+            ) c ON c.familia_id = f.id
             ORDER BY f.nombre ASC
         ")->fetchAll(PDO::FETCH_ASSOC);
         $familias = $rows;
