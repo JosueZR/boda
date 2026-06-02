@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = trim($_POST['password'] ?? '');
 
     if (empty($email) || empty($password)) {
-        $error_msg = "⚠️ Por favor, introduce todos los campos.";
+        $error_msg = "Por favor, introduce todos los campos.";
     } else {
         try {
             // Buscamos el archivo de conexión subiendo dos niveles
@@ -39,13 +39,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     header('Location: ../../php/admin/dashboard.php');
                     exit;
                 } else {
-                    $error_msg = "⚠️ El correo o la contraseña son incorrectos.";
+                    $error_msg = "El correo o la contraseña son incorrectos.";
                 }
             } else {
-                $error_msg = "⚠️ Error del sistema: No se encontró el archivo de conexión.";
+                $error_msg = "Error del sistema: No se encontró el archivo de conexión.";
             }
         } catch (Exception $e) {
-            $error_msg = "⚠️ Error en la Base de Datos: " . $e->getMessage();
+            $error_msg = "Error en la Base de Datos: " . $e->getMessage();
         }
     }
 }
@@ -57,6 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel Admin · Luis & Erendira</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="../css/login.css">
 </head>
 <body>
@@ -76,8 +78,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p class="subtitulo">Luis & Erendira · 2026</p>
 
             <?php if (!empty($error_msg)): ?>
-                <div class="error-msg" style="background: #f8d7da; color: #721c24; padding: 12px; border-radius: 6px; margin-bottom: 15px; font-size: 14px; text-align: center; border: 1px solid #f5c6cb;">
-                    <?php echo $error_msg; ?>
+                <div class="error-msg">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <?php echo htmlspecialchars($error_msg); ?>
                 </div>
             <?php endif; ?>
 
@@ -105,11 +108,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     >
                 </div>
                 <button type="submit" class="btn-login">
-                    Ingresar al Panel
+                    <i class="fa-solid fa-right-to-bracket"></i> Ingresar al Panel
                 </button>
             </form>
 
-            <a href="../../index.html" class="back-link">← Volver a la página de la boda</a>
+            <a href="../../index.html" class="back-link">
+                <i class="fa-solid fa-arrow-left"></i> Volver a la página de la boda
+            </a>
         </div>
     </div>
 

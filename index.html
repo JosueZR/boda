@@ -9,6 +9,10 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
+    <!-- Font Awesome 6 (iconos elegantes) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- Hoja de estilos -->
     <link rel="stylesheet" href="./public/css/index.css">
 </head>
 <body>
@@ -16,13 +20,16 @@
     <!-- PARTÍCULAS DECORATIVAS -->
     <div class="particles" id="particles"></div>
 
-    <!-- BOTÓN ADMIN OCULTO (el rombo del centro) -->
-    <a href="../boda/public/admin/login.php" class="admin-trigger" id="adminTrigger" title="Panel Admin">◇</a>
-    <!-- HERO / PORTADA -->
+    <!-- ACCESO ADMIN (rombo oculto en esquina) -->
+    <a href="./public/admin/login.php" class="admin-trigger" id="adminTrigger" title="Panel Admin">◇</a>
+
+    <!-- ══════════════════════════════════════
+         HERO / PORTADA
+    ══════════════════════════════════════ -->
     <header class="hero" id="hero">
         <div class="hero-content">
             <div class="ornament top">✦ ────── ◇ ────── ✦</div>
-            <div class="fecha-boda">Sábado · 14 de Febrero · 2026</div>
+            <div class="fecha-boda" id="fechaBodaTexto">Sábado · 14 de Febrero · 2026</div>
             <h1 class="nombres">Luis <span class="ampersand">&</span> Erendira</h1>
             <div class="ornament bottom">✦ ────── ◇ ────── ✦</div>
             <p class="versiculo">
@@ -31,12 +38,17 @@
             </p>
             <a href="#ubicacion" class="scroll-btn">
                 <span>Ver detalles</span>
-                <div class="scroll-arrow">↓</div>
+                <div class="scroll-arrow">
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
             </a>
         </div>
         <div class="hero-overlay"></div>
     </header>
 
+    <!-- ══════════════════════════════════════
+         CONTENIDO PRINCIPAL
+    ══════════════════════════════════════ -->
     <div class="main-content">
 
         <!-- CUENTA REGRESIVA -->
@@ -66,19 +78,27 @@
 
         <!-- SECCIÓN: UBICACIÓN -->
         <section class="seccion fade-in" id="ubicacion">
-            <div class="seccion-icon">📍</div>
+            <div class="seccion-icon">
+                <i class="fa-solid fa-location-dot"></i>
+            </div>
             <h2>Dónde Celebramos</h2>
             <div class="divider">◇</div>
             <div class="ubicacion-info">
                 <div class="lugar-card">
-                    <div class="lugar-emoji">⛪</div>
+                    <div class="lugar-emoji">
+                        <i class="fa-solid fa-church"></i>
+                    </div>
                     <h3>Ceremonia</h3>
                     <p>Parroquia Sagrado Corazón</p>
                     <p class="lugar-hora">4:00 PM</p>
                 </div>
-                <div class="lugar-sep">→</div>
+                <div class="lugar-sep">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
                 <div class="lugar-card">
-                    <div class="lugar-emoji">🌿</div>
+                    <div class="lugar-emoji">
+                        <i class="fa-solid fa-champagne-glasses"></i>
+                    </div>
                     <h3>Recepción</h3>
                     <p>Jardín de Eventos "Los Girasoles"</p>
                     <p class="lugar-hora">6:00 PM</p>
@@ -86,13 +106,15 @@
             </div>
             <p class="direccion">Av. Amor Eterno #123, Ciudad de México</p>
             <a href="https://maps.google.com" target="_blank" class="btn-mapa">
-                <span>📍</span> Ver en Google Maps
+                <i class="fa-solid fa-map-pin"></i> Ver en Google Maps
             </a>
         </section>
 
         <!-- SECCIÓN: NUESTRA HISTORIA -->
         <section class="seccion fade-in" id="historia">
-            <div class="seccion-icon">💕</div>
+            <div class="seccion-icon">
+                <i class="fa-solid fa-heart"></i>
+            </div>
             <h2>Nuestra Historia</h2>
             <div class="divider">◇</div>
             <p class="seccion-subtitulo">Un pequeño vistazo a nuestros momentos favoritos.</p>
@@ -114,7 +136,9 @@
 
         <!-- SECCIÓN: MESA DE REGALOS -->
         <section class="seccion fade-in" id="regalos">
-            <div class="seccion-icon">🎁</div>
+            <div class="seccion-icon">
+                <i class="fa-solid fa-gift"></i>
+            </div>
             <h2>Mesa de Regalos</h2>
             <div class="divider">◇</div>
             <p class="regalo-texto">
@@ -125,61 +149,93 @@
 
         <!-- SECCIÓN: CONFIRMACIÓN DE ASISTENCIA -->
         <section class="seccion seccion-confirmacion fade-in" id="confirmacion">
-            <div class="seccion-icon">✉️</div>
+            <div class="seccion-icon">
+                <i class="fa-regular fa-envelope"></i>
+            </div>
             <h2>Confirma tu Asistencia</h2>
             <div class="divider">◇</div>
-            <p class="alerta-fecha">⏰ Responde antes del <strong>10 de Enero · 2026</strong></p>
+            <p class="alerta-fecha">
+                <i class="fa-regular fa-clock"></i>
+                Responde antes del <strong id="fechaLimiteRsvp">10 de Enero · 2026</strong>
+            </p>
 
-            <!-- MENSAJE DE ÉXITO -->
+            <!-- Mensaje de éxito (oculto por defecto) -->
             <div class="mensaje-exito" id="mensajeExito" style="display:none;">
-                <div class="exito-icon">🎉</div>
+                <div class="exito-icon">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
                 <h3>¡Confirmación Recibida!</h3>
                 <p id="textoExito"></p>
             </div>
 
             <form id="formAsistencia" style="text-align: left;">
 
-                <!-- PASO 1: SELECCIONAR FAMILIA -->
+                <!-- PASO 1: Seleccionar familia -->
                 <div class="form-group">
-                    <label class="form-label-boda" for="familia">¿A qué familia perteneces?</label>
+                    <label class="form-label-boda" for="familia">
+                        <i class="fa-solid fa-users"></i> ¿A qué familia perteneces?
+                    </label>
                     <div class="select-wrapper">
                         <select name="familia" id="familia" class="select-boda" required>
-                            <option value="">Selecciona tu familia...</option>
-                            <!-- Las familias se cargarán dinámicamente -->
+                            <option value="">Cargando familias...</option>
+                            <!-- Opciones cargadas dinámicamente por index.js -->
                         </select>
-                        <span class="select-arrow">⌄</span>
+                        <span class="select-arrow">
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </span>
+                    </div>
+
+                    <!-- Aviso: sin familias registradas (oculto por defecto) -->
+                    <div class="aviso-sin-familias" id="avisoBodaSinFamilias" style="display:none;">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <div>
+                            <p class="aviso-titulo">No hay familias registradas</p>
+                            <p class="aviso-sub">El administrador aún no ha configurado las familias invitadas.</p>
+                        </div>
                     </div>
                 </div>
 
-                <!-- PASO 2: CONTADOR INTERACTIVO (aparece al seleccionar familia) -->
+                <!-- PASO 2: Contador de personas (aparece al elegir familia) -->
                 <div class="form-group" id="grupoContador" style="display:none;">
-                    <label class="form-label-boda">¿Cuántos asistirán?</label>
+                    <label class="form-label-boda">
+                        <i class="fa-solid fa-user-group"></i> ¿Cuántos asistirán?
+                    </label>
 
                     <div class="card-contador">
                         <div class="contador-info">
-                            <p class="contador-familia-nombre" id="nombreFamiliaDisplay">Familia García</p>
-                            <p class="contador-limite" id="textoLimite">Tienes <strong id="lugaresNum">4</strong> lugares reservados</p>
+                            <p class="contador-familia-nombre" id="nombreFamiliaDisplay"></p>
+                            <p class="contador-limite">
+                                Tienes <strong id="lugaresNum">0</strong> lugares reservados
+                            </p>
                         </div>
                         <div class="contador-control">
-                            <button type="button" class="btn-contador btn-menos" id="btnMenos" onclick="cambiarContador(-1)">−</button>
+                            <button type="button" class="btn-contador btn-menos" id="btnMenos">
+                                <i class="fa-solid fa-minus"></i>
+                            </button>
                             <span class="contador-numero" id="contadorNum">1</span>
-                            <button type="button" class="btn-contador btn-mas" id="btnMas" onclick="cambiarContador(1)">+</button>
+                            <button type="button" class="btn-contador btn-mas" id="btnMas">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
                         </div>
                     </div>
 
-                    <!-- RESUMEN VISUAL -->
+                    <!-- Resumen visual -->
                     <div class="resumen-card" id="resumenCard">
                         <div class="resumen-texto">
-                            <span class="resumen-emoji" id="resumenEmoji">🎉</span>
+                            <span class="resumen-icono" id="resumenEmoji">
+                                <i class="fa-solid fa-circle-check"></i>
+                            </span>
                             <span id="resumenMensaje">Todos los invitados asistirán</span>
                         </div>
                         <span class="resumen-count" id="resumenCount">1 persona</span>
                     </div>
                 </div>
 
-                <!-- PASO 3: NOTA ALIMENTARIA -->
+                <!-- PASO 3: Nota / restricción alimentaria -->
                 <div class="form-group" id="grupoNota" style="display:none;">
-                    <label class="form-label-boda" for="nota">Nota o restricción alimentaria</label>
+                    <label class="form-label-boda" for="nota">
+                        <i class="fa-regular fa-note-sticky"></i> Nota o restricción alimentaria
+                    </label>
                     <textarea
                         name="nota"
                         id="nota"
@@ -189,10 +245,16 @@
                     ></textarea>
                 </div>
 
+                <!-- Botón de confirmar -->
                 <button type="submit" class="btn-confirmar" id="btnConfirmar" style="display:none;">
-                    <span class="btn-text">✓ Confirmar Asistencia</span>
-                    <span class="btn-loading" style="display:none;">⏳ Enviando...</span>
+                    <span class="btn-text">
+                        <i class="fa-solid fa-check"></i> Confirmar Asistencia
+                    </span>
+                    <span class="btn-loading" style="display:none;">
+                        <i class="fa-solid fa-spinner fa-spin"></i> Enviando...
+                    </span>
                 </button>
+
             </form>
         </section>
 
@@ -201,267 +263,13 @@
             <div class="ornament">✦ ────── ◇ ────── ✦</div>
             <p class="footer-nombres">Luis & Erendira</p>
             <p class="footer-fecha">14 · 02 · 2026</p>
-            <p class="footer-copy">Con amor, los esperamos 💛</p>
+            <p class="footer-copy">Con amor, los esperamos</p>
         </footer>
 
     </div><!-- /main-content -->
 
-    <script>
-    // ============================================================
-    //  FAMILIAS - Se cargan desde PHP/localStorage
-    // ============================================================
-    let familiasData = {}; // { "nombre": { id, lugares } }
-    let contadorActual = 1;
-    let limiteActual = 1;
-
-    // Intentar cargar familias desde el servidor PHP
-    async function cargarFamilias() {
-        try {
-            const res = await fetch('./php/api/familias.php');
-            if (!res.ok) throw new Error('Sin servidor');
-            const data = await res.json();
-            if (data.success && data.familias.length > 0) {
-                procesarFamilias(data.familias);
-                return;
-            }
-        } catch (e) {
-            // Fallback: usar datos de demostración
-            console.log('Usando datos de demostración (sin conexión a BD)');
-        }
-        // Datos de demostración si no hay conexión
-        const demo = [
-            { id: 1, nombre: 'Familia García', lugares_asignados: 4 },
-            { id: 2, nombre: 'Familia Pérez', lugares_asignados: 3 },
-            { id: 3, nombre: 'Familia Rodríguez', lugares_asignados: 5 },
-            { id: 4, nombre: 'Familia López', lugares_asignados: 2 },
-            { id: 5, nombre: 'Familia Martínez', lugares_asignados: 6 },
-        ];
-        procesarFamilias(demo);
-    }
-
-    function procesarFamilias(lista) {
-        familiasData = {};
-        const select = document.getElementById('familia');
-        // Limpiar opciones (excepto la primera)
-        while (select.options.length > 1) select.remove(1);
-
-        lista.forEach(f => {
-            familiasData[f.nombre] = { id: f.id, lugares: f.lugares_asignados };
-            const opt = document.createElement('option');
-            opt.value = f.nombre;
-            opt.textContent = f.nombre;
-            select.appendChild(opt);
-        });
-    }
-
-    // ============================================================
-    //  SELECTOR DE FAMILIA
-    // ============================================================
-    document.getElementById('familia').addEventListener('change', function() {
-        const seleccionada = this.value;
-        const grupoContador = document.getElementById('grupoContador');
-        const grupoNota = document.getElementById('grupoNota');
-        const btnConfirmar = document.getElementById('btnConfirmar');
-
-        if (!seleccionada) {
-            grupoContador.style.display = 'none';
-            grupoNota.style.display = 'none';
-            btnConfirmar.style.display = 'none';
-            return;
-        }
-
-        const datos = familiasData[seleccionada];
-        if (!datos) return;
-
-        limiteActual = datos.lugares;
-        contadorActual = datos.lugares; // Inicia en el máximo
-
-        // Actualizar UI
-        document.getElementById('nombreFamiliaDisplay').textContent = seleccionada;
-        document.getElementById('lugaresNum').textContent = limiteActual;
-        actualizarContador();
-
-        // Mostrar secciones con animación
-        grupoContador.style.display = 'block';
-        grupoContador.classList.add('fade-in-up');
-        grupoNota.style.display = 'block';
-        grupoNota.classList.add('fade-in-up');
-        btnConfirmar.style.display = 'block';
-        btnConfirmar.classList.add('fade-in-up');
-    });
-
-    // ============================================================
-    //  CONTADOR +/-
-    // ============================================================
-    function cambiarContador(delta) {
-        const nuevo = contadorActual + delta;
-        if (nuevo < 1 || nuevo > limiteActual) return;
-        contadorActual = nuevo;
-        actualizarContador();
-
-        // Animación de rebote
-        const num = document.getElementById('contadorNum');
-        num.classList.remove('bounce');
-        void num.offsetWidth;
-        num.classList.add('bounce');
-    }
-
-    function actualizarContador() {
-        const num = document.getElementById('contadorNum');
-        const btnMenos = document.getElementById('btnMenos');
-        const btnMas = document.getElementById('btnMas');
-        const resumenCount = document.getElementById('resumenCount');
-        const resumenMensaje = document.getElementById('resumenMensaje');
-        const resumenEmoji = document.getElementById('resumenEmoji');
-
-        num.textContent = contadorActual;
-
-        // Estados de botones
-        btnMenos.disabled = contadorActual <= 1;
-        btnMas.disabled = contadorActual >= limiteActual;
-        btnMenos.classList.toggle('disabled', contadorActual <= 1);
-        btnMas.classList.toggle('disabled', contadorActual >= limiteActual);
-
-        // Resumen
-        resumenCount.textContent = contadorActual === 1 ? '1 persona' : `${contadorActual} personas`;
-
-        if (contadorActual === limiteActual) {
-            resumenEmoji.textContent = '🎉';
-            resumenMensaje.textContent = 'Todos los invitados asistirán';
-            document.getElementById('resumenCard').className = 'resumen-card resumen-todos';
-        } else if (contadorActual === 0) {
-            resumenEmoji.textContent = '😢';
-            resumenMensaje.textContent = 'Ningún invitado asistirá';
-            document.getElementById('resumenCard').className = 'resumen-card resumen-ninguno';
-        } else {
-            resumenEmoji.textContent = '😊';
-            resumenMensaje.textContent = `${contadorActual} de ${limiteActual} invitados asistirán`;
-            document.getElementById('resumenCard').className = 'resumen-card resumen-parcial';
-        }
-    }
-
-    // ============================================================
-    //  ENVÍO DEL FORMULARIO
-    // ============================================================
-    document.getElementById('formAsistencia').addEventListener('submit', async function(e) {
-        e.preventDefault();
-
-        const familiaSeleccionada = document.getElementById('familia').value;
-        const btnText = document.querySelector('.btn-text');
-        const btnLoading = document.querySelector('.btn-loading');
-
-        if (!familiaSeleccionada) return;
-
-        // Mostrar loading
-        btnText.style.display = 'none';
-        btnLoading.style.display = 'inline';
-        document.getElementById('btnConfirmar').disabled = true;
-
-        const datos = {
-            familia_id: familiasData[familiaSeleccionada].id,
-            familia_nombre: familiaSeleccionada,
-            personas: contadorActual,
-            nota: document.getElementById('nota').value
-        };
-
-        try {
-            const res = await fetch('./php/api/confirmar.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(datos)
-            });
-            const result = await res.json();
-            if (result.success) {
-                mostrarExito(familiaSeleccionada, contadorActual);
-                return;
-            }
-        } catch(e) {
-            // Sin conexión - mostrar éxito de demostración
-        }
-
-        // Éxito (demo o real)
-        mostrarExito(familiaSeleccionada, contadorActual);
-    });
-
-    function mostrarExito(familia, personas) {
-        document.getElementById('formAsistencia').style.display = 'none';
-        const exito = document.getElementById('mensajeExito');
-        document.getElementById('textoExito').textContent =
-            `¡${familia} (${personas} ${personas === 1 ? 'persona' : 'personas'}) han sido confirmados! Los esperamos con mucho cariño. 💛`;
-        exito.style.display = 'block';
-        exito.classList.add('fade-in-up');
-        document.querySelector('.alerta-fecha').style.display = 'none';
-    }
-
-    // ============================================================
-    //  CUENTA REGRESIVA
-    // ============================================================
-    function actualizarCuenta() {
-        const bodaDate = new Date('2026-02-14T16:00:00');
-        const ahora = new Date();
-        const diff = bodaDate - ahora;
-
-        if (diff <= 0) {
-            document.getElementById('countdown-section').innerHTML = '<p class="countdown-done">¡Hoy es el gran día!</p>';
-            return;
-        }
-
-        const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const horas = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const segs = Math.floor((diff % (1000 * 60)) / 1000);
-
-        document.getElementById('dias').textContent = String(dias).padStart(2, '0');
-        document.getElementById('horas').textContent = String(horas).padStart(2, '0');
-        document.getElementById('minutos').textContent = String(mins).padStart(2, '0');
-        document.getElementById('segundos').textContent = String(segs).padStart(2, '0');
-    }
-
-    // ============================================================
-    //  PARTÍCULAS DECORATIVAS
-    // ============================================================
-    function crearParticulas() {
-        const container = document.getElementById('particles');
-        const simbolos = ['✦', '◇', '✧', '·', '°'];
-        for (let i = 0; i < 20; i++) {
-            const p = document.createElement('div');
-            p.className = 'particle';
-            p.textContent = simbolos[Math.floor(Math.random() * simbolos.length)];
-            p.style.left = Math.random() * 100 + '%';
-            p.style.top = Math.random() * 100 + '%';
-            p.style.animationDelay = Math.random() * 6 + 's';
-            p.style.animationDuration = (4 + Math.random() * 4) + 's';
-            p.style.fontSize = (0.6 + Math.random() * 0.8) + 'rem';
-            container.appendChild(p);
-        }
-    }
-
-    // ============================================================
-    //  SCROLL SUAVE & FADE IN
-    // ============================================================
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-    document.querySelector('.scroll-btn').addEventListener('click', function(e) {
-        e.preventDefault();
-        document.getElementById('ubicacion').scrollIntoView({ behavior: 'smooth' });
-    });
-
-    // ============================================================
-    //  INICIALIZACIÓN
-    // ============================================================
-    cargarFamilias();
-    actualizarCuenta();
-    setInterval(actualizarCuenta, 1000);
-    crearParticulas();
-    </script>
+    <!-- JavaScript separado -->
+    <script src="./public/js/index.js"></script>
 
 </body>
 </html>

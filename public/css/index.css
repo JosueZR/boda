@@ -265,6 +265,11 @@ h1, h2, h3 {
 .seccion-icon {
     font-size: 2rem;
     margin-bottom: 1rem;
+    color: var(--dorado);
+}
+.seccion-icon i {
+    font-size: 2rem;
+    color: var(--dorado);
 }
 .seccion h2 {
     font-size: clamp(1.8rem, 4vw, 2.5rem);
@@ -305,7 +310,12 @@ h1, h2, h3 {
     transform: translateY(-4px);
     box-shadow: 0 12px 30px var(--sombra);
 }
-.lugar-emoji { font-size: 2rem; margin-bottom: 0.5rem; }
+.lugar-emoji {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: var(--dorado);
+}
+.lugar-emoji i { font-size: 1.8rem; color: var(--dorado); }
 .lugar-card h3 {
     font-family: 'Playfair Display', serif;
     font-size: 1.2rem;
@@ -320,10 +330,11 @@ h1, h2, h3 {
     margin-top: 0.4rem;
 }
 .lugar-sep {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: var(--dorado);
-    opacity: 0.4;
+    opacity: 0.5;
 }
+.lugar-sep i { font-size: 1.1rem; }
 .direccion {
     color: var(--texto-suave);
     font-size: 0.9rem;
@@ -458,6 +469,43 @@ h1, h2, h3 {
     border-color: var(--dorado);
     box-shadow: 0 0 0 3px rgba(201,169,110,0.15);
 }
+/* Select deshabilitado (sin familias o cargando) */
+.select-boda:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: var(--crema);
+}
+
+/* ── AVISO SIN FAMILIAS ── */
+.aviso-sin-familias {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    margin-top: 0.8rem;
+    padding: 1rem 1.2rem;
+    background: linear-gradient(135deg, #faf6f0, #f5ede0);
+    border: 1px solid rgba(201,169,110,0.35);
+    border-left: 4px solid var(--dorado);
+    border-radius: 8px;
+    animation: fadeInUp 0.4s ease both;
+}
+.aviso-sin-familias > i {
+    font-size: 1.3rem;
+    color: var(--dorado-oscuro);
+    margin-top: 0.1rem;
+    flex-shrink: 0;
+}
+.aviso-titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    color: var(--cafe);
+    margin-bottom: 0.2rem;
+}
+.aviso-sub {
+    font-size: 0.82rem;
+    color: var(--texto-suave);
+    line-height: 1.5;
+}
 .select-arrow {
     position: absolute;
     right: 1rem;
@@ -590,7 +638,15 @@ h1, h2, h3 {
     align-items: center;
     gap: 0.6rem;
 }
-.resumen-emoji { font-size: 1.2rem; }
+/* Ícono dinámico del resumen (FA) */
+.resumen-icono {
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+}
+.resumen-todos    .resumen-icono i { color: #3a8a5a; }
+.resumen-parcial  .resumen-icono i { color: var(--dorado-oscuro); }
+.resumen-ninguno  .resumen-icono i { color: #c0392b; }
 .resumen-count {
     font-family: 'Playfair Display', serif;
     font-size: 1.1rem;
@@ -643,7 +699,13 @@ h1, h2, h3 {
     padding: 2.5rem;
     animation: fadeInUp 0.6s ease both;
 }
-.exito-icon { font-size: 3.5rem; margin-bottom: 1rem; }
+/* Ícono de confirmación exitosa */
+.exito-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    color: var(--dorado);
+}
+.exito-icon i { font-size: 3rem; }
 .mensaje-exito h3 {
     font-size: 1.8rem;
     color: var(--cafe);
